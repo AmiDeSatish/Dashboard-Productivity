@@ -1,4 +1,4 @@
-import style from "./Register.module.css"
+import style from "./Login.module.css"
 import googleLogo from "../../assets/googleLogo.png"
 import appleLogo from "../../assets/appleLogo.png"
 import {useRef} from "react"
@@ -20,7 +20,7 @@ function Register(){
           </div>
           <form className={style.rightContainer}>
             <h1 className={style.rightTitle}>Get Started Now</h1>
-            <h3 className={style.rightSubtitle}>Please register to continue</h3>
+            <h3 className={style.rightSubtitle}>Please log in into your account to continue</h3>
 
             <div className={style.field}>
               <label>Name</label>
@@ -43,7 +43,7 @@ function Register(){
             </div>
 
             <button className={style.btnLogin}>
-              Register
+              Login
             </button>
 
             <h3 className={style.signUp}>Have an account ? Sign up</h3>
