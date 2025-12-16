@@ -1,6 +1,7 @@
 *{
   margin: 0;
   padding: 0;
+  font-family: "Roboto";
 }
 
 .page{
@@ -42,7 +43,6 @@
 }
 
 .leftTitle{
-  font-family: "Roboto";
   font-weight: 100;
   font-size: clamp(0.9rem, 2.3vw, 1.8rem);
   color: white;
@@ -52,15 +52,115 @@
   display: flex;
   flex-direction: column;
   justify-content: top;
-  align-items: center;
+  align-items: left;
   border: 1px solid red;
   margin: 30px 4px;
+  padding: 0 10%;
   border-radius: 15px;
 }
 
 .rightTitle{
-  font-family: "Roboto";
   font-size : clamp(0.9rem,2.3vw,1.8rem);
   font-weight: 500;
   color: black;
 }
+
+.rightSubtitle{
+  font-size: clamp(0.5rem,0.9vw,1rem);
+  font-weight: 300;
+  color: rgb(167, 162, 162);
+  margin-top: 0.2rem;
+}
+
+.field{
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(2px,1rem,16px);
+  gap: 0.4rem;
+}
+
+.field label{
+  font-size: clamp(0.5rem,1vw,1rem);
+  font-weight: 500;
+  color: black;
+}
+
+.field input{
+  border: 1px solid rgb(203, 198, 198);
+  border-radius: 6px;
+  font-size: clamp(0.5rem,0.9vw,1rem);
+  text-align: left;
+  padding: clamp(2px,0.5vw,7px) 10px;
+}
+
+.field input::placeholder{
+  color: rgb(167, 162, 162);
+}
+
+.checkbox{
+  margin-top: clamp(2px,0.9rem,16px);
+  display: flex;
+  align-items: center;
+  gap : 0.4rem;
+}
+
+.checkbox input{
+  transform: scale(clamp(4.8, 5vw, 5.5));
+}
+
+.checkbox label{
+  font-size: clamp(0.5rem,0.8vw,1rem);
+  color: black;
+}
+
+.btnLogin{
+  margin-top: clamp(2px,1.5rem,16px);
+  font-size: clamp(0.7rem,1.1vw,1.2rem);
+  font-weight: 500;
+  padding: clamp(2px,0.5vw,7px) 0;
+  border-radius: 10px;
+  border : none;
+  text-align: center;
+  color: white;
+  background-color: rgb(240, 192, 147);
+  transition: background-color 0.5s;
+}
+
+.btnLogin:hover{
+  background-color: rgb(208, 172, 136);
+  cursor: pointer;
+}
+
+.signUp{
+  margin-top: clamp(2px,0.2rem,12px);
+  font-size: clamp(0.5rem,0.8vw,1rem);
+  font-weight: 300;
+  color: black;
+  text-align: center;
+}
+
+.separation{
+  display: flex;
+  margin-top: clamp(2px,1rem,24px);
+  font-size: clamp(0.5rem,0.8vw,1rem);
+  color: rgb(203, 198, 198);
+  align-items: center;
+}
+
+.separation::before, .separation::after{
+  background-color: rgb(203, 198, 198);
+  flex: 1;
+  content: "";
+  height: 1px;
+}
+
+.otherLogin{
+  margin-top: clamp(2px,1rem,24px);
+  display: flex;
+  gap: 0.4rem;
+}
+
+.otherLogin button{
+  width: 100%;
+}
+
