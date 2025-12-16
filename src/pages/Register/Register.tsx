@@ -1,4 +1,6 @@
 import style from "./Register.module.css"
+import googleLogo from "../../assets/googleLogo.png"
+import appleLogo from "../../assets/appleLogo.png"
 import {useRef} from "react"
 
 function Register(){
@@ -47,8 +49,14 @@ function Register(){
             <label className={style.separation}>OR</label>
 
             <div className={style.otherLogin}>
-              <button>Login with <span>Google</span></button>
-              <button>Login with <span>Apple</span></button>
+              <button>
+                <img src={googleLogo}/>
+                Login with <span className={style.bold}>Google</span>
+              </button>
+              <button>
+                <img src={appleLogo}/>
+                Login with <span className={style.bold}>Apple</span>
+              </button>
             </div>
           </form>
       </div>
