@@ -14,17 +14,18 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: rgb(203, 198, 198);
+  background-color: rgb(228, 222, 222);
+  padding: 0 15px;
 }
 
 .profil{
   display: flex; 
   align-items: center;
   gap: 0.6rem;
-  padding: 5px clamp(2px,0.5vw,8px);
-  height: 66px;
+  padding: clamp(2px,0.6vw,8px) 0;
+  height: 76px;
   width: 100%;
-  border: 1px solid black;
+  border-bottom: 1px solid rgb(203, 198, 198);
 }
 
 .profilPicture{
@@ -44,4 +45,53 @@
 
 .profilUserName{
   font-weight: 600;
+  font-size: 1rem;
+}
+
+.profilEmail{
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.dashboardInboxContainer{
+  margin-top: 0;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  height: 110px;
+  border-bottom: 1px solid rgb(203, 198, 198);
+  padding: 5px 0;
+}
+
+.dashboardContainer, .inboxContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 12px;
+}
+
+.dashboardLeft, .inboxLeft{
+  display: flex;
+  align-items: center;
+  gap : 0.8rem;
+}
+
+.dashboardIcon, .inboxIcon{
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.dashboardLeft p, .inboxLeft p{
+  font-size: 0.9rem;
+}
+
+.dashboardNotif, .inboxNotif{
+  display: flex;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-color: rgb(233, 64, 64);
+  border: none;
+  margin-right: 12px;
 }

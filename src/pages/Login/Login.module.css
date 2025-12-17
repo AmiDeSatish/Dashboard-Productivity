@@ -154,6 +154,14 @@
   height: 1px;
 }
 
+.separation::before{
+  margin-right:4px;
+}
+
+.separation::after{
+  margin-left: 4px;
+}
+
 .otherLogin{
   margin-top: clamp(2px,1rem,24px);
   display: flex;
