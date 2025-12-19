@@ -1,13 +1,24 @@
 import {useState} from "react"
+
+import ProfileSection from "../ProjectSection/ProjectSection"
+
 import profilePic from "../../../assets/profilpic.jfif"
 import dashboardIcon from "./dashboard.png"
 import inboxIcon from "./inbox.png"
+import workEmoji from "../../../assets/appleEmoji/work.png"
+import houseEmoji from "../../../assets/appleEmoji/house.png"
+
 import style from "./Sidebar.module.css"
 
 function SideBar(){
 
   const [username,seUsertName] = useState<string>("Thibault")
   const [email, setEmail] = useState<string>("tbone_92@outlook.fr")
+
+  const projectsTest = [
+    {id : 1, name : "Personnal", logo : houseEmoji},
+    {id : 2, name : "Work", logo : workEmoji}
+  ]
   return(
     <>
       <div className={style.container}>
@@ -19,21 +30,22 @@ function SideBar(){
           </div>
         </div>
         <div className={style.dashboardInboxContainer}>
-          <div className={style.dashboardContainer}>
+          <button className={style.dashboardContainer}>
             <div className={style.dashboardLeft}>
               <img className={style.dashboardIcon} src={dashboardIcon}/>
-              <p>Dashboard</p>
+              <span>Dashboard</span>
             </div>
             <div className={style.dashboardNotif}></div>
-          </div>
-          <div className={style.inboxContainer}>
+          </button>
+          <button className={style.inboxContainer}>
             <div className={style.inboxLeft}>
               <img className={style.inboxIcon} src={inboxIcon}/>
-              <p>Inbox</p>
+              <span>Inbox</span>
             </div>
             <div className={style.inboxNotif}></div>
-          </div>
+          </button>
         </div>
+        <ProfileSection projects = {projectsTest}/>
       </div>
     </>
   )
