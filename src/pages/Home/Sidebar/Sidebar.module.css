@@ -6,16 +6,18 @@
 }
 
 .container{
-  position : fixed;
+  position : sticky;
   top: 0;
   bottom: 0;
   left: 0;
   width: clamp(260px,20vw,400px);
+  height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: rgb(242, 242, 242);
   padding: 0 15px;
+  margin-right: 50px;
 }
 
 .profil{

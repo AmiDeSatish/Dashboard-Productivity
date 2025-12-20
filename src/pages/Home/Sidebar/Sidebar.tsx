@@ -1,6 +1,6 @@
 import {useState} from "react"
 
-import ProfileSection from "../ProjectSection/ProjectSection"
+import SideBarProfileSection from "../SideBarProjectSection/ProjectSection"
 
 import profilePic from "../../../assets/profilpic.jfif"
 import dashboardIcon from "./dashboard.png"
@@ -45,7 +45,7 @@ function SideBar(){
             <div className={style.inboxNotif}></div>
           </button>
         </div>
-        <ProfileSection projects = {projectsTest}/>
+        <SideBarProfileSection projects = {projectsTest}/>
       </div>
     </>
   )

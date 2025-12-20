@@ -1,5 +1,5 @@
 import {useState} from "react"
-import style from "./ProjectSection.module.css"
+import style from "./SideBarProjectSection.module.css"
 import plusIcon from "./plusIcon.png"
 
 type Project = {
@@ -12,7 +12,7 @@ type ProjectsSectionProps = {
   projects? : Project[]
 }
 
-function ProjectSection({projects = []} : ProjectsSectionProps){
+function SideBarProjectSection({projects = []} : ProjectsSectionProps){
 
   const [showProjects,setShowProjects] = useState<boolean>(false)
 
@@ -46,4 +46,4 @@ function ProjectSection({projects = []} : ProjectsSectionProps){
   )
 }
 
-export default ProjectSection
+export default SideBarProjectSection
