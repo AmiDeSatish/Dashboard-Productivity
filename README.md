@@ -77,3 +77,6 @@ export default defineConfig([
 Login page : https://fr.pinterest.com/pin/211174978480581/
 
 Home Page : https://dribbble.com/shots/25447382-Task-Management-Dashboard-App
+
+# Sources : 
+SVG icons : https://heroicons.com/

@@ -26,7 +26,7 @@ function SideBarProjectSection({projects = []} : ProjectsSectionProps){
         <div className={style.firstRow}>
           <span>Projects</span>
           <button onClick={handleShowProjects} className={style.buttonPlusProject}>
-            <img className={style.plusIcon} src={plusIcon}/>
+            <img className={`${style.plusIcon} ${showProjects? style.open : style.close}`} src={plusIcon}/>
           </button>
         </div>
         <ul className={style.projectList}>

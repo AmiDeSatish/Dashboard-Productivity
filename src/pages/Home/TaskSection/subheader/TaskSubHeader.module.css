@@ -1,0 +1,46 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
+}
+
+.subHeaderWrapper{
+  padding: 0 15px;
+}
+
+.subHeaderContainer{
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(179, 174, 174);
+}
+
+.subHeaderLeft{
+  display: flex;
+  gap : 20px;
+}
+
+.subHeaderLeftButton{
+  all: unset;
+  padding: 8px 0;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgb(112, 108, 108);
+  cursor : pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.subHeaderLeftButton svg{
+  height: 16px;
+  width: 16px;
+}
+
+.clicked{
+  color: blue;
+  border-bottom-color: blue;
+}
