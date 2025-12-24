@@ -1,0 +1,94 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto";
+  box-sizing: border-box;
+}
+
+.taskListWrapper{
+  padding: 0 15px;
+}
+
+.taskGrid{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  height: auto;
+}
+
+.caseHeader{
+  display : flex;
+  min-width: 120px;
+  padding: 7px 0;
+  padding-left: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  gap : 6px;
+  border-bottom : 1px solid rgb(179, 174, 174);
+  
+}
+
+.caseHeader svg{
+  color: rgb(112, 108, 108);
+  width: 20px;
+  height: 20px;
+}
+
+.caseHeader span{
+  font-size: 0.9rem;
+  color: rgb(112, 108, 108);
+  font-weight: 300;
+}
+
+.gridRow:hover{
+  background-color: rgb(220, 213, 213);
+}
+
+.caseItem{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 9px;
+  padding-top: 9px;
+  padding-left: 17px;
+  min-width: 120px;
+  border-bottom: 1px solid rgb(179, 174, 174);
+  border-right: 1px solid rgb(179, 174, 174);
+}
+
+.caseItem.buttonCell {
+  display: flex;
+  padding-left: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.caseItem.doubleButtonCell {
+  display: flex;
+  padding-left: 0;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 18px;
+}
+
+
+.caseHeaderName{
+  min-width: 240px;
+}
+
+.caseItem span{
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.caseButton{
+  all : unset;
+  display: flex;
+  cursor: pointer;
+}
+
+.caseButton img{
+  height: 24px;
+  width: 24px;
+}

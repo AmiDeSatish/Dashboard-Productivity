@@ -4,27 +4,29 @@ import style from "./TaskSection.module.css"
 
 import TaskHeader from "./header/TaskHeader.tsx"
 import TaskSubHeader from "./subheader/TaskSubHeader.tsx"
+import TaskList from "./TaskList/TaskList.tsx"
 
-type Task = {
-  id : number,
-  name : string,
-  category : string,
-  due : Date,
-  priority : string,
-  progress : string
-}
+import type {Filter} from "../../../types/tasks.ts"
+import type {Task} from "../../../types/shared.ts"
+
 
 type TaskSectionProps = {
-  tasks? : Task[]
+  Tasks? : Task[]
 }
 
-function TaskSection({tasks = []}:TaskSectionProps){
+function TaskSection({Tasks = []}:TaskSectionProps){
+
+  const [stateTasks,setTasks] = useState<Task[]>(Tasks)
 
   const [isWatching, setIsWatching] = useState<boolean>(true)
-
   function toggleWatching(){
     console.log("Arrow cliqué !")
     setIsWatching(w => !w)
+  }
+
+  const [filter,setFilter] = useState<Filter>("all")
+  function handleFilter(inf){
+    setFilter(inf)
   }
 
   return(
@@ -34,7 +36,17 @@ function TaskSection({tasks = []}:TaskSectionProps){
           isWatching = {isWatching}
           toggleWatching = {toggleWatching}
         />
-        {isWatching && <TaskSubHeader/>}
+        {isWatching && <TaskSubHeader
+                          filter = {filter}
+                          handleFilter = {handleFilter}
+                        />
+        }
+        {isWatching && <TaskList
+                          filter= {filter}
+                          tasks = {stateTasks}
+                          setTasks = {setTasks}
+                        />
+        }
       </div>
       
     </>
