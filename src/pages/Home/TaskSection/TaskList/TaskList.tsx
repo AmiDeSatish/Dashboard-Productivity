@@ -10,7 +10,7 @@ import deleteEmoji from "../../../../assets/appleEmoji/delete.png"
 
 import type {Task, Progress, Priority} from "../../../../types/shared.ts"
 import type {Filter} from "../../../../types/tasks.ts"
-
+import {useEffect} from "react"
 import { UpString, ddMMyy,NextProgressState, NextPriorityState} from "../../../../utils.ts"
 
 
@@ -55,6 +55,18 @@ function TaskList({filter,tasks,setTasks} : TaskListProps){
       }
     }))
   }
+
+  function handleDelete(id : number){
+    console.log("id donné :", id)
+    console.log("Handle Delete clicked !")
+    setTasks(t => t.filter(task => {
+      return task.id !== id
+    }))
+  }
+
+  useEffect(() => {
+    console.log(tasks)
+  },[tasks])
 
   return(
     <>
@@ -135,7 +147,7 @@ function TaskList({filter,tasks,setTasks} : TaskListProps){
                 <button className={style.caseButton}>
                   <img src={editEmoji}/>
                 </button>
-                <button className={style.caseButton}>
+                <button onClick={() => handleDelete(task.id)} className={style.caseButton}>
                   <img src={deleteEmoji}/>
                 </button>
               </div>

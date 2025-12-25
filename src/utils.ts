@@ -1,4 +1,4 @@
-import type {Priority, Progress} from "./types/shared.ts"
+import type {Priority, Progress, CreateTaskInput, Task} from "./types/shared.ts"
 
 function UpString(str){
   let result = ""
@@ -44,4 +44,17 @@ function NextPriorityState(currentPrio : Priority) : Priority{
   return priorities[index + 1]
 }
 
-export {UpString,ddMMyy,NextProgressState, NextPriorityState}
+function CreateTask(id : number ,input : CreateTaskInput) : Task{
+  return {
+    id : id,
+    name : input.name ?? "Simple Task",
+    category : input.category ?? "Personnal",
+    due : input.due ?? new Date(),
+    priority : input.priority ?? "low",
+    color : input.color ?? "#FFFFFF",
+    progress : input.progress ?? "pending",
+    project : input.project
+  }
+}
+
+export {UpString,ddMMyy,NextProgressState, NextPriorityState,CreateTask}

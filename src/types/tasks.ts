@@ -1,1 +1,3 @@
-export type Filter = "all"|"done"|"date"
+type Filter = "all"|"done"|"date"
+
+export type {Filter}
