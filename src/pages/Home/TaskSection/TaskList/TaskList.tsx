@@ -17,10 +17,13 @@ import { UpString, ddMMyy,NextProgressState, NextPriorityState} from "../../../.
 type TaskListProps = {
   filter : Filter,
   tasks : Task[],
-  setTasks : React.Dispatch<React.SetStateAction<Task[]>>
+  handleProgress : (id : number) => void,
+  handlePriority : (id : number) => void,
+  handleDelete : (id : number) => void,
+  openEditModal : (task : Task) => void
 }
 
-function TaskList({filter,tasks,setTasks} : TaskListProps){
+function TaskList({filter,tasks,handleProgress,handlePriority,handleDelete,openEditModal} : TaskListProps){
 
   const progressEmojiMap : Record<Progress,string> = {
     pending : snoozeEmoji,
@@ -32,36 +35,6 @@ function TaskList({filter,tasks,setTasks} : TaskListProps){
     low : lowPrio,
     medium : mediumPrio,
     high : highPrio,
-  }
-
-  function handleProgress(id : number){
-    setTasks(t => t.map(task => {
-      if(task.id === id){
-        const nextProgress = NextProgressState(task.progress)
-        return {...task, progress : nextProgress}
-      }
-      else{return {...task}}
-    }))
-  }
-
-  function handlePriority(id : number){
-    setTasks(t => t.map(task => {
-      if(id === task.id){
-        const nextPrio = NextPriorityState(task.priority)
-        return({...task, priority : nextPrio})
-      }
-      else{
-        return {...task}
-      }
-    }))
-  }
-
-  function handleDelete(id : number){
-    console.log("id donné :", id)
-    console.log("Handle Delete clicked !")
-    setTasks(t => t.filter(task => {
-      return task.id !== id
-    }))
   }
 
   useEffect(() => {
@@ -144,7 +117,7 @@ function TaskList({filter,tasks,setTasks} : TaskListProps){
                 </button>
               </div>
               <div className={`${style.caseItem} ${style.doubleButtonCell}`}>
-                <button className={style.caseButton}>
+                <button onClick={() => openEditModal(task)} className={style.caseButton}>
                   <img src={editEmoji}/>
                 </button>
                 <button onClick={() => handleDelete(task.id)} className={style.caseButton}>

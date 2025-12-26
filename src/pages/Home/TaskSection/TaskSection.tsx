@@ -9,6 +9,8 @@ import TaskEditModal from "./editModal/TaskEditModal.tsx"
 
 import type {Filter} from "../../../types/tasks.ts"
 import type {Priority, Progress, Task, Project,CreateTaskInput} from "../../../types/shared.ts"
+import { UpString, ddMMyy,NextProgressState, NextPriorityState} from "../../../utils.ts"
+
 
 import { CreateTask } from "../../../utils.ts"
 
@@ -17,6 +19,7 @@ type TaskSectionProps = {
 }
 
 type EditContextType = {
+  selectedTask : Task | null,
   closeEditModal : () => void,
   editTask : (id : number, patch : Partial<Task>) => void
 }
@@ -24,6 +27,7 @@ type EditContextType = {
 export const EditContext = createContext<EditContextType | null>(null)
 
 function TaskSection({Tasks = []}:TaskSectionProps){
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [stateTasks,setTasks] = useState<Task[]>(Tasks)
 
   {/*State Variable, setter and function for adding a task.
@@ -41,8 +45,10 @@ function TaskSection({Tasks = []}:TaskSectionProps){
   */}
   const [isEditModal, setEditModal] = useState<boolean>(false)
 
-  function openEditModal(){
+  function openEditModal(task : Task) : void{
+    console.log("Btn edit clicked")
     setEditModal(true)
+    setSelectedTask(task)
   }
 
   function closeEditModal(){
@@ -61,11 +67,43 @@ function TaskSection({Tasks = []}:TaskSectionProps){
     }))
   }
 
-  {/*Variable d'état et setter pour l'affichage ou non des tasks*/}
+  {/*Variable d'état et setter pour l'affichage, gestion des priorités, des progres
+     et de la suppression.
+  */}
   const [isWatching, setIsWatching] = useState<boolean>(true)
-  function toggleWatching(){
+  function toggleWatching() : void{
     console.log("Arrow cliqué !")
     setIsWatching(w => !w)
+  }
+
+  function handleProgress(id : number){
+    setTasks(t => t.map(task => {
+      if(task.id === id){
+        const nextProgress = NextProgressState(task.progress)
+        return {...task, progress : nextProgress}
+      }
+      else{return {...task}}
+    }))
+  }
+
+  function handlePriority(id : number){
+    setTasks(t => t.map(task => {
+      if(id === task.id){
+        const nextPrio = NextPriorityState(task.priority)
+        return({...task, priority : nextPrio})
+      }
+      else{
+        return {...task}
+      }
+    }))
+  }
+
+  function handleDelete(id : number){
+    console.log("id donné :", id)
+    console.log("Handle Delete clicked !")
+    setTasks(t => t.filter(task => {
+      return task.id !== id
+    }))
   }
 
   {/*Variable d'etat et setter pour le choix de l'affichage des tasks
@@ -97,11 +135,15 @@ function TaskSection({Tasks = []}:TaskSectionProps){
         {isWatching && <TaskList
                           filter= {filter}
                           tasks = {stateTasks}
-                          setTasks = {setTasks}
+                          handleDelete={handleDelete}
+                          handlePriority = {handlePriority}
+                          handleProgress={handleProgress}
+                          openEditModal = {openEditModal}
                         />
         }
         {isEditModal && 
           <EditContext.Provider value={{
+            selectedTask,
             closeEditModal,
             editTask,
           }}>

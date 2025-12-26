@@ -86,6 +86,11 @@
   all : unset;
   display: flex;
   cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.caseButton:hover{
+  transform: scale(115%);
 }
 
 .caseButton img{
