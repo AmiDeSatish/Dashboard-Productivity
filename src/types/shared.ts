@@ -6,8 +6,8 @@ type Task = {
   name : string,
   category : string,
   due : Date,
+  notif : boolean,
   priority : Priority,
-  color : string,
   progress : Progress
   project? : Project
 }

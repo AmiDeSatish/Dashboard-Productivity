@@ -1,6 +1,6 @@
 import type {Priority, Progress, CreateTaskInput, Task} from "./types/shared.ts"
 
-function UpString(str){
+function UpString(str : string) : string{
   let result = ""
   
   for(let i = 0; i< str.length; i++){
@@ -16,7 +16,6 @@ function UpString(str){
       result += str[i]
     }
   }
-
   return result
 }
 

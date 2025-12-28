@@ -14,7 +14,7 @@ function HomePage(){
       category: "UI/UX",
       due: new Date("2025-12-25"),
       priority: "high",
-      color: "#ff6b6b", // rouge pour haute priorité
+      notif : true,
       progress: "inProgress",
     },
     {
@@ -23,7 +23,7 @@ function HomePage(){
       category: "Backend",
       due: new Date("2025-12-28"),
       priority: "medium",
-      color: "#feca57", // jaune pour priorité moyenne
+      notif : true,
       progress: "pending",
     },
     {
@@ -32,7 +32,7 @@ function HomePage(){
       category: "Backend",
       due: new Date("2025-12-27"),
       priority: "high",
-      color: "#ff6b6b",
+      notif : true,
       progress: "done",
     },
     {
@@ -41,7 +41,7 @@ function HomePage(){
       category: "Frontend",
       due: new Date("2025-12-26"),
       priority: "low",
-      color: "#1dd1a1", // vert pour faible priorité
+      notif : true,
       progress: "inProgress",
     },
   ];

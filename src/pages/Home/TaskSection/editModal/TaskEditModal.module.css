@@ -5,7 +5,19 @@
   font-family: "Roboto";
 }
 
+.ModalBackground{
+  position: fixed;
+  z-index: 500;
+  background-color: rgba(0,0,0,0.3);
+  top: 0;
+  bottom : 0;
+  left: 0;
+  width: 100vw;
+}
+
 .EditModalWrapped{
+  position : fixed;
+  z-index: 1000;
   display : flex;
   top : 0;
   height: 100vh;
@@ -18,88 +30,278 @@
 
 .EditModalContainer{
   display: grid;
+  gap : 30px;
+  grid-template-columns: 3fr 5fr;
+  height: 350px;
+  width: 720px;
+}
+
+.TaskEssentialContainer, .TaskStateContainer, .TaskTemporalityContainer{
+  display: flex;
+  flex-direction: column;
+  padding: 20px 15px;
   border-radius: 20px;
-  overflow: hidden;
-  grid-template-rows: 1fr 4fr 1fr;
-  height: 60vh;
-  width: 500px;
+  background-color: white;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: transform 0.7s;
 }
 
-.EditModalHeader{
+.header{
   display: flex;
-  position: relative;
+  flex-direction: row;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: rgb(220, 213, 213);
+  justify-content: space-between;
+  margin-bottom: 35px;
 }
 
-.EditModalTitle{
-  position : absolute;
-  left: 50%;
-  transform: translateX(-50%);
+.headerTemporality{
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap : 7px;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.EditModalTitle img{
-  height: 30px;
-  width: 30px;
-}
-
-.EditModalTitle h1{
-  font-size: 1.5rem;
+.header h2,.headerTemporality h2{
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
 .btnCloseEditModal{
   all: unset;
   display: flex;
-  position : absolute;
   right: 16px;
   cursor: pointer;
 }
 
 .btnCloseEditModal svg{
-  height: 32px;
-  width: 32px;
+  height: 20px;
+  width: 20px;
 }
 
-.EditModalForm{
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  border-bottom: 1px solid black;
-}
-
-.EditModalFooter{
+.field{
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  border-bottom: 1px solid black;
+  border: 3px solid rgb(179, 174, 174);
+  border-radius: 35px;
+  padding: 12px 15px 12px;
+  margin-bottom: 20px;
 }
 
-.btnEditModal{
+.fieldLabel{
+  color: rgb(179, 174, 174);
   position: absolute;
-  right: 16px;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 8px 45px;
-  border: none;
-  color: white;
-  border-radius: 30px;
-  background-color: rgb(110, 222, 110);
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.4s;
+  background: white;
+  padding: 0 3px;
+  top : -9px;
+  left : 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.btnEditModal:hover{
-  background-color: rgb(91, 199, 91);
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+.field input{
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgb(179, 174, 174);
 }
+
+.field input::placeholder{
+  color: rgb(179, 174, 174);
+}
+
+.fieldNotif{
+  border-color: rgb(124, 102, 102);
+  margin-right: 20px;
+}
+.fieldLabelNotif{color: rgb(124, 102, 102);}
+
+.fieldDate{
+  border-color: rgb(85, 15, 138);
+  margin-bottom: 0px;
+}
+.fieldLabelDate{color : rgb(85, 15, 138)}
+
+.fieldName{border-color: rgb(222, 206, 84);}
+.fieldLabelName{color : rgb(222, 206, 84)}
+
+.fieldProject{border-color: rgb(229, 167, 100);}
+.fieldLabelProject{color : rgb(229, 167, 100);}
+
+.fieldCategory{border-color: rgb(217, 104, 174);}
+.fieldLabelCategory{color : rgb(217, 104, 174)}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.footer{
+  margin-top: 20px;
+  display: flex;
+  border-top: 1px solid rgb(179, 174, 174);
+  padding-top: 20px;
+  padding-left: 5px;
+  justify-content: space-around;
+}
+
+.footer button{
+  height: 40px;
+  width: 80px;
+  border: 2px solid rgb(102, 193, 137);
+  border-radius: 5px;
+  background-color: white;
+  color: rgb(102, 193, 137);
+  cursor : pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  transition : background-color 0.7s, color 0.4s;
+}
+
+.footer button:hover{
+  background-color: rgb(102, 193, 137);
+  color: white;
+}
+
+.TaskEssentialContainer:hover, .TaskStateContainer:hover, .TaskTemporalityContainer:hover{
+  transform: scale(102%);
+}
+
+.content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: auto;
+  width: auto;
+}
+
+.champ{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.headerState{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.headerState h2{
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.leftArrow, .rightArrow{
+  all : unset;
+  cursor: pointer;
+  background-color: white;
+  margin: 5px;
+}
+
+.leftArrow img{
+  width: 20px;
+  height: 20px;
+  transform: rotate(-90deg);
+}
+
+.rightArrow img{
+  width: 24px;
+  height: 24px;
+  transform: rotate(90deg);;
+}
+
+.fieldRound{
+  position : relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border : 3px solid rgb(176, 71, 176);
+  height: 90px;
+  width: 90px;
+}
+
+.fieldRound img{
+  height: 36px;
+  width: 36px;
+}
+
+.fieldRoundLabel{
+  position: absolute;
+  top : -9px;
+  left : 10px;
+  background-color: white;
+  padding: 0 2px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.fieldRoundPending{border-color: rgb(36, 75, 204);}
+.fieldRoundInProgress{border-color: #d09124ff;}
+.fieldRoundDone{border-color: #2ad33eff;}
+
+.fieldRoundLabelPending{color: rgb(36, 75, 204);}
+.fieldRoundLabelInProgress{color: #d09124ff;}
+.fieldRoundLabelDone{color: #2ad33eff;}
+
+.fieldRoundLow{border-color: rgb(65, 231, 84);}
+.fieldRoundMedium{border-color: rgb(232, 215, 55);}
+.fieldRoundHigh{border-color: rgb(248, 52, 52);}
+
+.fieldRoundLabelLow{color: rgb(65, 231, 84);}
+.fieldRoundLabelMedium{color: rgb(232, 215, 55);}
+.fieldRoundLabelHigh{color: rgb(248, 52, 52);;}
+
+.right{
+  display: grid;
+  grid-template-rows: 5fr 4fr;
+  gap : 30px
+}
+
+.switchOff{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(123, 117, 117);
+  border-radius: 15px;
+  height: 25px;
+  width: 50px;
+  padding: 0 5px;
+}
+
+.switchOn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(84, 202, 102);
+  border-radius: 15px;
+  height: 25px;
+  width: 50px;
+  padding: 0 5px;
+}
+
+.switchOff, .switchOn{overflow: hidden;}
+
+.on {
+  transform: translateX(10px);
+  background-color: white;
+}
+
+.off {
+  transform: translateX(-10px);
+  background-color: rgb(203, 195, 195);
+}
+
+.round{
+  display: flex;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  transition: transform 0.5s;
+}
+

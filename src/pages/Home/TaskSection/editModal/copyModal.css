@@ -1,0 +1,182 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
+}
+
+.EditModalWrapped{
+  display : flex;
+  top : 0;
+  height: 100vh;
+  left: clamp(260px, 20vw, 400px);
+  width: calc(100vw - clamp(260px, 20vw, 400px));
+  position : fixed;
+  align-items: center;
+  justify-content: center;
+}
+
+.EditModalContainer{
+  display: grid;
+  border-radius: 20px;
+  overflow: hidden;
+  grid-template-rows: 1fr 4fr 1fr;
+  height: 60vh;
+  width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.EditModalHeader{
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(220, 213, 213);
+}
+
+.EditModalTitle{
+  position : absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap : 7px;
+}
+
+.EditModalTitle img{
+  height: 30px;
+  width: 30px;
+}
+
+.EditModalTitle h1{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.btnCloseEditModal{
+  all: unset;
+  display: flex;
+  position : absolute;
+  right: 16px;
+  cursor: pointer;
+}
+
+.btnCloseEditModal svg{
+  height: 32px;
+  width: 32px;
+}
+
+.EditModalForm{
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.FormFirstRow,.FormSecondRow,.FormThirdRow, .FormFourthRow{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+}
+
+.champ{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap : 8px;
+}
+
+.champ h2{
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.champ input{
+  color: rgb(162, 156, 156);
+  padding : 6px 15px;
+  border-radius: 15px;
+  border: 1px solid rgb(162, 156, 156);
+}
+
+.champClickable{
+  display : flex;
+  align-items: center;
+  justify-content: center;
+  gap : 10px
+}
+
+.champClickable img{
+  height: 24px;
+  width: 24px;
+}
+
+.leftArrow,.rightArrow{
+  all : unset;
+  display : flex;
+  cursor: pointer;
+}
+
+.leftArrow svg,.rightArrow svg{
+  height: 16px;
+  width: 16px;
+}
+
+.EditModalFooter{
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.btnEditModal{
+  position: absolute;
+  right: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 45px;
+  border: none;
+  color: white;
+  border-radius: 30px;
+  background-color: rgb(110, 222, 110);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.4s;
+}
+
+.btnEditModal:hover{
+  background-color: rgb(91, 199, 91);
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border: 2px solid #999191;
+  border-radius: 30px;
+  padding: 20px 12px 12px;
+}
+
+.fieldLabel {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: white;
+  padding: 0 6px;
+  font-size: 0.9rem;
+  color: #999191;;
+}
+
+.field input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color :#999191;
+}
