@@ -1,0 +1,49 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
+}
+
+.projectHeader{
+  display: flex;
+  padding: 10px 0;
+  background-color: rgb(242, 242, 242);
+  border: none;
+  border-radius: 10px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.HeaderLeft{
+  display: flex;
+  margin-left: 12px;
+  gap: 10px;
+  flex-direction: row;
+}
+
+.HeaderLeft img{
+  height: 24px;
+  width: 24px;
+}
+
+.HeaderLeft h1{
+  font-size: 1.1rem;
+}
+
+.arrowButton{
+  all : unset;
+  cursor : pointer;
+  margin-right: 16px;
+}
+
+.open{
+  transform: rotate(180deg);
+}
+
+.arrowButton img{
+  height: 16px;
+  width: 16px;
+  transition: transform 0.2s;
+}

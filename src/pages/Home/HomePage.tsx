@@ -2,6 +2,7 @@ import SideBar from "./Sidebar/Sidebar";
 import taskSection from "./TaskSection/TaskSection"
 import style from "./Home.module.css";
 import TaskSection from "./TaskSection/TaskSection";
+import ProjectSection from "./ProjectSection/ProjectSection.tsx"
 import type { Task } from "../../types/shared";
 
 function HomePage(){
@@ -52,6 +53,7 @@ function HomePage(){
         <SideBar/>
         <div className={style.content}>
           <TaskSection Tasks={Tasks}/>
+          <ProjectSection/>
         </div>
       </div>
       

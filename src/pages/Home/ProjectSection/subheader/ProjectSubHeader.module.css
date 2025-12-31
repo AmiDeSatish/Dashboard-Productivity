@@ -1,0 +1,45 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto";
+}
+
+.subheaderWrapper{
+  display: flex;
+  padding : 0 15px;
+}
+
+.SubHeaderContainer{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(179, 174, 174);
+}
+
+.filterPart{
+  display: flex;
+  gap : 20px
+}
+
+.filterBtn{
+  all: unset;
+  display: flex;
+  padding: 8px 0;
+  gap : 6px;
+  cursor: pointer;
+  color: rgb(112, 108, 108);
+  font-size: 0.9rem;
+  border-bottom: 2px solid transparent;
+}
+
+.filterBtn svg{
+  height : 16px;
+  width: 16px;
+}
+
+.clicked{
+  color: blue;
+  border-bottom-color: blue;
+}
