@@ -1,0 +1,56 @@
+*{
+  font-family: "Roboto";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ProjectListWrapper{
+  padding: 15px;
+}
+
+.projectGrid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr; 
+}
+
+.caseHeader{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap : 6px;
+  padding : 7px 0;
+  padding-left: 10px;
+  border-bottom : 1px solid rgb(179, 174, 174);
+}
+
+.caseHeader svg{
+  height : 20px;
+  width : 20px;
+  color: rgb(112, 108, 108);
+}
+
+.caseHeader span{
+  font-size: 0.9rem;
+  color: rgb(112, 108, 108);
+  font-weight: 300;
+}
+
+.caseItem{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 9px;
+  padding-top: 9px;
+  padding-left: 17px;
+  min-width: 120px;
+  border-bottom: 1px solid rgb(179, 174, 174);
+  border-right: 1px solid rgb(179, 174, 174);
+}
+
+.caseItem span{
+  font-weight: 300;
+  font-size: 0.9rem;
+}

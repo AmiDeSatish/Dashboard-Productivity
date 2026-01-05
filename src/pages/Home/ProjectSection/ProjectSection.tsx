@@ -3,8 +3,15 @@ import {useState,useContext, createContext} from "react"
 import style from "./ProjectSection.module.css"
 import ProjectHeader from "./header/ProjectHeader.tsx"
 import ProjectSubHeader from "./subheader/ProjectSubHeader.tsx"
+import ProjectList from "./ProjectList/ProjectList.tsx"
 
-function ProjetSection(){
+import type { Project } from "../../../types/shared.ts"
+
+type ProjetSectionProps = {
+  projects : Project[]
+}
+
+function ProjetSection({projects} : ProjetSectionProps){
   const [isWatching, setIsWatching] = useState<boolean>(false)
   const [filterProject, setFilterProject] = useState<string>("")
 
@@ -28,6 +35,12 @@ function ProjetSection(){
                           filter = {filterProject}
                           handleFilter = {handleFilter}
                         />
+        }
+
+        {isWatching && <ProjectList
+                        projects = {projects}
+                        />
+
         }
       </div>
     </>

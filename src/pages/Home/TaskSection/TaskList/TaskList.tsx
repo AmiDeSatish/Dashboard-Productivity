@@ -101,7 +101,7 @@ function TaskList({filter,tasks,handleProgress,handlePriority,handleDelete,openE
                 <span>{UpString(task.name)}</span>
               </div>
               <div className={style.caseItem}>
-                <span>{UpString(task.category)}</span>
+                <span>{task.categoryId}</span>
               </div>
               <div className={style.caseItem}>
                 <span>{ddMMyy(task.due)}</span>

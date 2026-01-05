@@ -47,12 +47,12 @@ function CreateTask(id : number ,input : CreateTaskInput) : Task{
   return {
     id : id,
     name : input.name ?? "Simple Task",
-    category : input.category ?? "Personnal",
+    categoryId : input.categoryId ?? 1,
     due : input.due ?? new Date(),
     priority : input.priority ?? "low",
-    color : input.color ?? "#FFFFFF",
     progress : input.progress ?? "pending",
-    project : input.project
+    projectId : input.projectId,
+    notif : input.notif
   }
 }
 

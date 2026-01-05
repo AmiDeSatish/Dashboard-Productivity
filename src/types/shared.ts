@@ -4,27 +4,36 @@ type Priority = "low" | "medium" | "high"
 type Task = {
   id : number,
   name : string,
-  category : string,
   due : Date,
   notif : boolean,
   priority : Priority,
-  progress : Progress
-  project? : Project
+  progress : Progress,
+  categoryId? : number,
+  projectId? : number
 }
 
 type Project = {
   id : number,
+  color : string,
+  due :  Date,
   tasks? : Task[]
+  categoryId? : number
+}
+
+type Category = {
+  id : number,
+  name : string,
+  logo : string
 }
 
 type CreateTaskInput = {
   name : string,
-  category? : string,
   due? : Date,
   priority? : Priority,
-  color? : string,
-  progress? : Progress
-  project? : Project
+  progress? : Progress,
+  notif : boolean,
+  projectId? : number,
+  categoryId? : number
 }
 
 export type {Task, Progress, Priority, Project, CreateTaskInput}
