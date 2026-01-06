@@ -15,6 +15,14 @@
   grid-template-columns: 1fr 1fr 1fr 1fr; 
 }
 
+.projectRow{
+  background-color: var(--project-color);
+}
+
+.projectRow:hover{
+  background-color: var(--hover-color);
+}
+
 .caseHeader{
   display: flex;
   justify-content: flex-start;
@@ -53,4 +61,25 @@
 .caseItem span{
   font-weight: 300;
   font-size: 0.9rem;
+}
+
+.caseButton{
+  justify-content: center;
+  gap: 40px;
+}
+
+.actionButton{
+  all : unset;
+  display: flex;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.actionButton:hover{
+  transform: scale(115%);
+}
+
+.actionButton img{
+  height: 24px;
+  width: 24px;
 }

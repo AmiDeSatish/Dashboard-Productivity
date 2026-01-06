@@ -90,7 +90,10 @@ function HomePage(){
         <SideBar/>
         <div className={style.content}>
           <TaskSection Tasks={tasks}/>
-          <ProjectSection projects={projects}/>
+          <ProjectSection 
+            tasks={tasks}
+            projects={projects}
+          />
         </div>
       </div>
       

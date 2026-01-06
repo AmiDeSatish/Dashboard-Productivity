@@ -5,13 +5,14 @@ import ProjectHeader from "./header/ProjectHeader.tsx"
 import ProjectSubHeader from "./subheader/ProjectSubHeader.tsx"
 import ProjectList from "./ProjectList/ProjectList.tsx"
 
-import type { Project } from "../../../types/shared.ts"
+import type { Task,Project } from "../../../types/shared.ts"
 
 type ProjetSectionProps = {
+  tasks : Task[]
   projects : Project[]
 }
 
-function ProjetSection({projects} : ProjetSectionProps){
+function ProjetSection({tasks,projects} : ProjetSectionProps){
   const [isWatching, setIsWatching] = useState<boolean>(false)
   const [filterProject, setFilterProject] = useState<string>("")
 
@@ -38,6 +39,7 @@ function ProjetSection({projects} : ProjetSectionProps){
         }
 
         {isWatching && <ProjectList
+                        tasks = {tasks}
                         projects = {projects}
                         />
 

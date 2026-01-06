@@ -1,13 +1,17 @@
 import style from "./ProjectList.module.css"
 
-import type { Project } from "../../../../types/shared"
-import { ddMMyy } from "../../../../utils"
+import type { Task,Project } from "../../../../types/shared"
+import { ddMMyy, DarkenColor, ProjectProgress, ProjectTasks } from "../../../../utils"
+
+import editEmoji from "../../../../assets/appleEmoji/edit.png"
+import deleteEmoji from "../../../../assets/appleEmoji/delete.png"
 
 type ProjectListProps = {
+  tasks : Task[]
   projects : Project[]
 }
 
-function ProjectList({projects} : ProjectListProps){
+function ProjectList({tasks, projects} : ProjectListProps){
   return(
     <>
       <div className={style.ProjectListWrapper}>
@@ -39,18 +43,29 @@ function ProjectList({projects} : ProjectListProps){
         </div>
         {projects.map(project => {
             return(
-              <div key={project.id} className={style.projectGrid} style={{backgroundColor : project.color}}>
+              <div key={project.id} 
+                    className={`${style.projectGrid} ${style.projectRow}`} 
+                    style={{
+                      "--project-color" : project.color,
+                      "--hover-color":  DarkenColor(project.color)
+                    }as React.CSSProperties}
+              >
                 <div className={style.caseItem}>
                   <span>{project.id}</span>
                 </div>
                 <div className={style.caseItem}>
-                  {/**A IMPLEMENTER : LE % FAIT */}
+                  {`${ProjectProgress(ProjectTasks(project.id, tasks))}%`}
                 </div>
                 <div className={style.caseItem}>
                   <span>{ddMMyy(project.due)}</span>
                 </div>
-                <div className={style.caseItem}>
-                  <span>{project.id}</span>
+                <div className={`${style.caseItem} ${style.caseButton}`}>
+                  <button className={style.actionButton}>
+                    <img src={editEmoji}/>
+                  </button>
+                  <button className={style.actionButton}>
+                    <img src={deleteEmoji}/>
+                  </button>
                 </div>
               </div>
             )
