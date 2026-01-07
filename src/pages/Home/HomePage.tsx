@@ -3,7 +3,17 @@ import taskSection from "./TaskSection/TaskSection"
 import style from "./Home.module.css";
 import TaskSection from "./TaskSection/TaskSection";
 import ProjectSection from "./ProjectSection/ProjectSection.tsx"
-import type { Task, Project } from "../../types/shared";
+import type { Task, Project, CreateTaskInput } from "../../types/shared";
+import { CreateTask, NextPriorityState, NextProgressState } from "../../utils.ts";
+import { createContext, useState } from "react";
+
+/**Creation of the context for the modification of the Task (passed to TaskList) */
+type HandleTaskType = {
+  handleProgressTask : (id : number) => void,
+  handlPriorityTask : (id : number) => void,
+  handleDeleteTask : (id : number) => void
+}
+export const HandleTask = createContext<HandleTaskType>
 
 function HomePage(){
   type Progress = "pending" | "inProgress" | "done";
@@ -83,13 +93,71 @@ function HomePage(){
     }
   ]
 
+  /**Logic related to the STATEFULL var Tasks */
+  const [stateTasks, setTasks] = useState<Task[]>(tasks)
+
+  function handleDeleteTask(id : number){
+    /**Delete the selected task */
+    console.log("id donné :", id)
+    console.log("Handle Delete clicked !")
+    setTasks(t => t.filter(task => {
+      return task.id !== id
+    }))
+  }
+
+  function addTask (input : CreateTaskInput){
+    /**Add a task */
+    const newTask = CreateTask(stateTasks.length, input)
+    setTasks(t => [...t, newTask])
+  }
+
+  function handleEditTask(id : number , patch : Partial<Task>){
+    const cleanPatch = Object.fromEntries(Object.entries(patch).filter(([_,field]) => field !== undefined))
+    setTasks(t => t.map(task => {
+      if(id === task.id){
+        return {...task, ...cleanPatch}
+      }
+      else{
+        return {...task}
+      }
+    }))
+  }
+
+  function handleProgressTask(id : number){
+    setTasks(t => t.map(task => {
+      if(task.id === id){
+        const nextProgress = NextProgressState(task.progress)
+        return {...task, progress : nextProgress}
+      }
+      else{return {...task}}
+    }))
+  }
+
+  function handlePriorityTask(id : number){
+    setTasks(t => t.map(task => {
+      if(id === task.id){
+        const nextPrio = NextPriorityState(task.priority)
+        return({...task, priority : nextPrio})
+      }
+      else{
+        return {...task}
+      }
+    }))
+  }
+
 
   return(
     <>
       <div className={style.homepage}>
         <SideBar/>
         <div className={style.content}>
-          <TaskSection Tasks={tasks}/>
+          <TaskSection 
+            tasks={stateTasks}
+            handleDeleteTask={handleDeleteTask}
+            handlePriorityTask={handlePriorityTask}
+            handleProgressTask={handleProgressTask}
+            handleEditTask={handleEditTask}
+          />
           <ProjectSection 
             tasks={tasks}
             projects={projects}

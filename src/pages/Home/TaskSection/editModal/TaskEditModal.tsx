@@ -1,7 +1,7 @@
 import style from "./TaskEditModal.module.css"
 import { useState,useContext } from "react"
 import type {Progress, Priority, Task, Project } from "../../../../types/shared.ts"
-import { EditContext } from "../TaskSection.tsx"
+import { EditTaskContext } from "../TaskSection.tsx"
 import lowEmoji from "../../../../assets/appleEmoji/low.png"
 import mediumEmoji from "../../../../assets/appleEmoji/medium.png"
 import highEmoji from "../../../../assets/appleEmoji/high.png"
@@ -15,7 +15,7 @@ import { UpString } from "../../../../utils.ts"
 import {ddMMyy} from "../../../../utils.ts"
 
 function TaskEditModal(){
-  const ctx = useContext(EditContext)
+  const ctx = useContext(EditTaskContext)
   const originalTask = ctx?.selectedTask
 
   {/*const [editedTask, setEditedTask] = useState<Task>(ctx.selectedTask)*/}
@@ -129,7 +129,7 @@ function TaskEditModal(){
     if (date !== "" && date !== originalTask.due.toISOString().slice(0, 10)) {patch.due = new Date(date)}
     if(notifOn !== undefined && notifOn !== originalTask?.notif){patch.notif = notifOn}
 
-    ctx?.editTask(originalTask.id,patch)
+    ctx?.handleEditTask(originalTask.id,patch)
     ctx?.closeEditModal()
   }
 

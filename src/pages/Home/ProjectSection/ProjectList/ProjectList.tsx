@@ -7,11 +7,13 @@ import editEmoji from "../../../../assets/appleEmoji/edit.png"
 import deleteEmoji from "../../../../assets/appleEmoji/delete.png"
 
 type ProjectListProps = {
-  tasks : Task[]
-  projects : Project[]
+  tasks : Task[],
+  projects : Project[],
+  deleteProject : (id : number) => void,
+  openEditProModal : () => void
 }
 
-function ProjectList({tasks, projects} : ProjectListProps){
+function ProjectList({tasks,deleteProject,openEditProModal, projects} : ProjectListProps){
   return(
     <>
       <div className={style.ProjectListWrapper}>
@@ -63,7 +65,7 @@ function ProjectList({tasks, projects} : ProjectListProps){
                   <button className={style.actionButton}>
                     <img src={editEmoji}/>
                   </button>
-                  <button className={style.actionButton}>
+                  <button onClick={() => deleteProject(project.id)} className={style.actionButton}>
                     <img src={deleteEmoji}/>
                   </button>
                 </div>

@@ -10,20 +10,22 @@ import deleteEmoji from "../../../../assets/appleEmoji/delete.png"
 
 import type {Task, Progress, Priority} from "../../../../types/shared.ts"
 import type {Filter} from "../../../../types/tasks.ts"
-import {useEffect} from "react"
+import {useContext, useEffect} from "react"
 import { UpString, ddMMyy,NextProgressState, NextPriorityState} from "../../../../utils.ts"
-
+import { EditTaskContext } from "../TaskSection.tsx"
 
 type TaskListProps = {
-  filter : Filter,
   tasks : Task[],
-  handleProgress : (id : number) => void,
-  handlePriority : (id : number) => void,
-  handleDelete : (id : number) => void,
-  openEditModal : (task : Task) => void
+  filter : Filter,
+  handleEditTask : (id : number, patch : Partial<Task>) => void,
+  handleProgressTask : (id : number) => void,
+  handlePriorityTask : (id : number) => void,
+  handleDeleteTask : (id : number) => void
 }
 
-function TaskList({filter,tasks,handleProgress,handlePriority,handleDelete,openEditModal} : TaskListProps){
+function TaskList({tasks,filter,handleEditTask,handlePriorityTask,handleProgressTask,handleDeleteTask} : TaskListProps){
+  /**Use the context of TaskSection to open  */
+  const ctx = useContext(EditTaskContext)
 
   const progressEmojiMap : Record<Progress,string> = {
     pending : snoozeEmoji,
@@ -107,20 +109,20 @@ function TaskList({filter,tasks,handleProgress,handlePriority,handleDelete,openE
                 <span>{ddMMyy(task.due)}</span>
               </div>
               <div className={`${style.caseItem} ${style.buttonCell}`}>
-                <button className={style.caseButton} onClick={() => handleProgress(task.id)}>
+                <button className={style.caseButton} onClick={() => handleProgressTask(task.id)}>
                   <img src= {progressEmojiMap[task.progress]}/>
                 </button>
               </div>
               <div className={`${style.caseItem} ${style.buttonCell}`}>
-                <button className={style.caseButton} onClick={() => handlePriority(task.id)}>
+                <button className={style.caseButton} onClick={() => handlePriorityTask(task.id)}>
                   <img src={priorityEmojiMap[task.priority]}/>
                 </button>
               </div>
               <div className={`${style.caseItem} ${style.doubleButtonCell}`}>
-                <button onClick={() => openEditModal(task)} className={style.caseButton}>
+                <button onClick={() => ctx.openEditModal(task)} className={style.caseButton}>
                   <img src={editEmoji}/>
                 </button>
-                <button onClick={() => handleDelete(task.id)} className={style.caseButton}>
+                <button onClick={() => handleDeleteTask(task.id)} className={style.caseButton}>
                   <img src={deleteEmoji}/>
                 </button>
               </div>
