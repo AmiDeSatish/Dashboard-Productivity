@@ -8,7 +8,7 @@ import TaskList from "./TaskList/TaskList.tsx"
 import TaskEditModal from "./editModal/TaskEditModal.tsx"
 
 import type {Filter} from "../../../types/tasks.ts"
-import type {Priority, Progress, Task, Project,CreateTaskInput} from "../../../types/shared.ts"
+import type {Priority, Progress, Task, Project,CreateTaskInput, TaskUI} from "../../../types/shared.ts"
 import { UpString, ddMMyy,NextProgressState, NextPriorityState} from "../../../utils.ts"
 
 
@@ -16,23 +16,17 @@ import { CreateTask } from "../../../utils.ts"
 
 type TaskSectionProps = {
   tasks? : Task[],
+  tasksUI : TaskUI[],
+  selectedTask : Task | null,
   handleDeleteTask : (id : number) => void,
   handlePriorityTask : (id : number) => void,
   handleProgressTask : (id : number) => void,
-  handleEditTask : (id : number, patch : Partial<Task>) => void
+  handleEditTask : (id : number, patch : Partial<Task>) => void,
+  handleChangeTaskID : (id : number) => void
 }
 
-type EditTaskContextType = {
-  selectedTask: Task | null
-  openEditModal: (task: Task) => void
-  closeEditModal: () => void
-  handleEditTask : (id : number, patch : Partial<Task>) => void
-}
-
-export const EditTaskContext = createContext<EditTaskContextType | null>(null)
-
-function TaskSection({tasks,handleDeleteTask,handlePriorityTask,handleProgressTask,handleEditTask}:TaskSectionProps){
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+function TaskSection({tasks,tasksUI,selectedTask,handleDeleteTask,handlePriorityTask,handleProgressTask,handleEditTask,handleChangeTaskID}:TaskSectionProps){
+  
   const [isAddModal, setAddModal] = useState<boolean>(false)
   const [filter, setFilter] = useState<Filter>("all")
 
@@ -41,10 +35,10 @@ function TaskSection({tasks,handleDeleteTask,handlePriorityTask,handleProgressTa
   */}
   const [isEditModal, setEditModal] = useState<boolean>(false)
 
-  function openEditModal(task : Task) : void{
+  function openEditModal(taskID : number) : void{
     console.log("Btn edit clicked")
     setEditModal(true)
-    setSelectedTask(task)
+    handleChangeTaskID(taskID)
   }
 
   function closeEditModal(){
@@ -77,12 +71,6 @@ function TaskSection({tasks,handleDeleteTask,handlePriorityTask,handleProgressTa
 
   return(
     <>
-      <EditTaskContext.Provider value={{
-            openEditModal,
-            selectedTask,
-            closeEditModal,
-            handleEditTask
-          }}>
       <div className={style.taskWrapper}>
         <TaskHeader 
           isWatching = {isWatching}
@@ -95,17 +83,24 @@ function TaskSection({tasks,handleDeleteTask,handlePriorityTask,handleProgressTa
         }
         {isWatching && <TaskList
                           tasks={tasks}
+                          selectedTask={selectedTask}
+                          tasksUI={tasksUI}
                           filter= {filter}
+                          openEditModal={openEditModal}
                           handleEditTask={handleEditTask}
                           handleDeleteTask={handleDeleteTask}
                           handlePriorityTask={handlePriorityTask}
                           handleProgressTask={handleProgressTask}
+                          handleChangeTaskID={handleChangeTaskID}
                         />
         }
-        {isEditModal && <TaskEditModal/>
+        {isEditModal && selectedTask && <TaskEditModal
+                          selectedTask={selectedTask}
+                          onClose={closeEditModal}
+                          handleEditTask={handleEditTask}
+                        />
         }
       </div>
-      </EditTaskContext.Provider>
     </>
   )
 }

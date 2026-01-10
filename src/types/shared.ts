@@ -12,6 +12,10 @@ type Task = {
   projectId? : number
 }
 
+type TaskUI = Task & {
+  projectColor : string
+}
+
 type Project = {
   id : number,
   color : string,
@@ -36,4 +40,4 @@ type CreateTaskInput = {
   categoryId? : number
 }
 
-export type {Task, Progress, Priority, Project, CreateTaskInput}
+export type {Task, TaskUI, Progress, Priority, Project, CreateTaskInput}

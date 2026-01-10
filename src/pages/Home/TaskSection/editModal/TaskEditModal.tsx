@@ -1,7 +1,6 @@
 import style from "./TaskEditModal.module.css"
 import { useState,useContext } from "react"
 import type {Progress, Priority, Task, Project } from "../../../../types/shared.ts"
-import { EditTaskContext } from "../TaskSection.tsx"
 import lowEmoji from "../../../../assets/appleEmoji/low.png"
 import mediumEmoji from "../../../../assets/appleEmoji/medium.png"
 import highEmoji from "../../../../assets/appleEmoji/high.png"
@@ -14,22 +13,26 @@ import notebookEmoji from "../../../../assets/appleEmoji/notebook.png"
 import { UpString } from "../../../../utils.ts"
 import {ddMMyy} from "../../../../utils.ts"
 
-function TaskEditModal(){
-  const ctx = useContext(EditTaskContext)
-  const originalTask = ctx?.selectedTask
+type TaskEditModalProps = {
+  selectedTask : Task,
+  onClose : () => void,
+  handleEditTask : (id : number, patch : Partial<Task>) => void
+}
 
-  {/*const [editedTask, setEditedTask] = useState<Task>(ctx.selectedTask)*/}
-  const [name, setName] = useState<string>("");
-  const [progress, setProgress] = useState<Progress>(ctx.selectedTask.progress)
-  const [priority, setPriority] = useState<Priority>(ctx.selectedTask.priority)
-  const [project,setProject] = useState<Project>(ctx?.selectedTask.project)
-  const [date, setDate] = useState<string>(
-  ctx.selectedTask.due
-    ? ctx.selectedTask.due.toISOString().slice(0, 10)
-    : ""
+function TaskEditModal({selectedTask, onClose, handleEditTask} : TaskEditModalProps){
+
+  const originalTask = selectedTask
+  const [name, setName] = useState(selectedTask.name)
+  const [category, setCategory] = useState(selectedTask.categoryId)
+  const [project, setProject] = useState(selectedTask.projectId)
+  const [progress, setProgress] = useState(selectedTask.progress)
+  const [priority, setPriority] = useState(selectedTask.priority)
+  const [notifOn, setNotifOn] = useState(selectedTask.notif)
+  const [date, setDate] = useState(
+    selectedTask.due
+      ? selectedTask.due.toISOString().slice(0, 10)
+      : ""
   )
-  const [category, setCategory] = useState<string>("");
-  const [notifOn,setNotifOn] = useState<boolean>(ctx.selectedTask.notif)
 
   const prio : Priority[] = ["low","medium","high"]
   const emojiPrioMap : Record<Priority,string> = {
@@ -61,15 +64,20 @@ function TaskEditModal(){
   function handleNotifChange(){
     setNotifOn(!notifOn)
   }
-  function handleCancel(){
+  function handleCancel() {
     setName(originalTask.name)
-    setCategory(originalTask.category)
-    setProject(originalTask?.project)
-    setDate(originalTask.due)
-    setNotifOn(originalTask.notif)
-    setPriority(originalTask.priority)
+    setCategory(originalTask.categoryId)
+    setProject(originalTask.projectId)
     setProgress(originalTask.progress)
+    setPriority(originalTask.priority)
+    setNotifOn(originalTask.notif)
+    setDate(
+      originalTask.due
+        ? originalTask.due.toISOString().slice(0, 10)
+        : ""
+    )
   }
+
 
   {/*
     Logic for changing the priority of the edited task.
@@ -119,29 +127,37 @@ function TaskEditModal(){
   }
 
   {/*Function to edit the modification given to the task */}
-  function handleEdit(){
-    let patch  : Partial<Task> = {}
-    if(name !== "" && name !== originalTask?.name){patch.name = name}
-    if(category !== undefined && category !== originalTask?.category){patch.category = category}
-    if(progress !== undefined && progress !== originalTask?.progress){patch.progress = progress}
-    if(priority !== undefined && priority !== originalTask?.priority){patch.priority = priority}
-    if(project !== undefined && project !== originalTask?.project){patch.project = project}
-    if (date !== "" && date !== originalTask.due.toISOString().slice(0, 10)) {patch.due = new Date(date)}
-    if(notifOn !== undefined && notifOn !== originalTask?.notif){patch.notif = notifOn}
+  function handleEdit() {
+    const patch: Partial<Task> = {}
 
-    ctx?.handleEditTask(originalTask.id,patch)
-    ctx?.closeEditModal()
+    if (name !== originalTask.name) patch.name = name
+    if (category !== originalTask.categoryId) patch.categoryId = category
+    if (project !== originalTask.projectId) patch.projectId = project
+    if (progress !== originalTask.progress) patch.progress = progress
+    if (priority !== originalTask.priority) patch.priority = priority
+    if (notifOn !== originalTask.notif) patch.notif = notifOn
+
+    const originalDate =
+      originalTask.due?.toISOString().slice(0, 10) ?? ""
+
+    if (date !== originalDate) {
+      patch.due = new Date(date)
+    }
+
+    handleEditTask(originalTask.id, patch)
+    onClose()
   }
+
 
   return(
     <>
-      <div className={style.ModalBackground} onClick={ctx.closeEditModal}></div>
+      <div className={style.ModalBackground} onClick={onClose}></div>
       <div className={style.EditModalWrapped}>
         <div className={style.EditModalContainer}>
           <form className={style.TaskEssentialContainer}>
             <header className={style.header}>
               <h2>Task Essential</h2>
-              <button onClick={ctx.closeEditModal} className={style.btnCloseEditModal}>
+              <button onClick={onClose} className={style.btnCloseEditModal}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
@@ -157,7 +173,7 @@ function TaskEditModal(){
             </div>
             <div className={`${style.field} ${style.fieldCategory}`}>
               <span className={`${style.fieldLabel} ${style.fieldLabelCategory}`}>Category</span>
-              <input value={category} onChange={(e) => handleCategoryChange(e)} placeholder={originalTask.category} type="text"/>
+              <input value={category} onChange={(e) => handleCategoryChange(e)} placeholder={originalTask.categoryId} type="text"/>
             </div>
 
             <footer className={style.footer}>
@@ -170,7 +186,7 @@ function TaskEditModal(){
             <div className={style.TaskStateContainer}>
               <header className={style.headerState}>
                 <h2>Task State</h2>
-                <button onClick={ctx.closeEditModal} className={style.btnCloseEditModal}>
+                <button onClick={onClose} className={style.btnCloseEditModal}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                   </svg>
@@ -208,7 +224,7 @@ function TaskEditModal(){
             <div className={style.TaskTemporalityContainer}>
               <header className={style.headerTemporality}>
                 <h2>Task Temporality</h2>
-                <button onClick={ctx.closeEditModal} className={style.btnCloseEditModal}>
+                <button onClick={onClose} className={style.btnCloseEditModal}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                   </svg>

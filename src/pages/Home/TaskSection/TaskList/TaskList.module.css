@@ -11,9 +11,14 @@
 
 .taskGrid{
   display: grid;
+  background-color: var(--task-color);
   width: 100%;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
   height: auto;
+}
+
+.taskGrid:hover{
+  background-color: var(--hover-color);
 }
 
 .caseHeader{
@@ -37,10 +42,6 @@
   font-size: 0.9rem;
   color: rgb(112, 108, 108);
   font-weight: 300;
-}
-
-.gridRow:hover{
-  background-color: rgb(220, 213, 213);
 }
 
 .caseItem{

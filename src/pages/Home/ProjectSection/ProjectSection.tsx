@@ -1,4 +1,4 @@
-import {useState,useContext, createContext} from "react"
+import {useState} from "react"
 
 import style from "./ProjectSection.module.css"
 import ProjectHeader from "./header/ProjectHeader.tsx"
@@ -10,20 +10,11 @@ import type { Task,Project } from "../../../types/shared.ts"
 type ProjetSectionProps = {
   tasks : Task[]
   projects : Project[]
+  handleDeleteProjects : (id : number) => void
 }
 
-type EditContextType = {
-  selectedProject : Project | null,
-  closeEditModal : () => void,
-  editProject : () => void
-}
-
-export const EditContext = createContext<EditContextType|null>(null)
-
-function ProjetSection({tasks,projects} : ProjetSectionProps){
+function ProjetSection({tasks,projects,handleDeleteProjects} : ProjetSectionProps){
   /**Statefull Variable */
-  const [stateProjects, setProjects] = useState<Project[]>(projects)
-  const [selectedProject,setSelectedProject] = useState<Project | null>(null)
   const [editModal, setEditModal] = useState<boolean>(false)
   const [isWatching, setIsWatching] = useState<boolean>(false)
   const [filterProject, setFilterProject] = useState<string>("")
@@ -35,11 +26,6 @@ function ProjetSection({tasks,projects} : ProjetSectionProps){
 
   function handleFilter(info : string) : void{
     setFilterProject(info)
-  }
-
-  function deleteProject(selectedId : number) : void{
-    console.log("Bouton delete Project clicked")
-    setProjects(p => p.filter(project => project.id !== selectedId))
   }
 
   function closeEditModal(){
@@ -67,18 +53,12 @@ function ProjetSection({tasks,projects} : ProjetSectionProps){
                         />
         }
 
-        {isWatching &&  <EditContext.Provider value = {{
-                          selectedProject,
-                          closeEditModal,
-                          editProject
-                        }}>
-                          <ProjectList
-                          deleteProject={deleteProject}
+        {isWatching &&  <ProjectList
+                          handleDeleteProjects={handleDeleteProjects}
                           openEditProModal={openEditModal}
                           tasks = {tasks}
-                          projects = {stateProjects}
-                          />
-                        </EditContext.Provider> 
+                          projects = {projects}
+                        />
         }
       </div>
     </>

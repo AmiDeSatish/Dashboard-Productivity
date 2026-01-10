@@ -3,9 +3,9 @@ import taskSection from "./TaskSection/TaskSection"
 import style from "./Home.module.css";
 import TaskSection from "./TaskSection/TaskSection";
 import ProjectSection from "./ProjectSection/ProjectSection.tsx"
-import type { Task, Project, CreateTaskInput } from "../../types/shared";
+import type { Task, Project, CreateTaskInput, TaskUI } from "../../types/shared";
 import { CreateTask, NextPriorityState, NextProgressState } from "../../utils.ts";
-import { createContext, useState } from "react";
+import { createContext, useMemo, useState } from "react";
 
 /**Creation of the context for the modification of the Task (passed to TaskList) */
 type HandleTaskType = {
@@ -35,6 +35,20 @@ function HomePage(){
       due: new Date("2026-01-15")
     }
   ]
+
+  /**Logic related to the Project variable */
+  const [stateProjects,setProjects] = useState<Project[]>(projects)
+  const [selectedProjectId,setSelectedProjectId] = useState<number | null>(null)
+
+  const selectedProject = useMemo(() => {
+    stateProjects.find(project => project.id === selectedProjectId)
+  },[stateProjects,selectedProjectId])
+
+  function handleDeleteProject(selectedId : number) : void{
+    console.log("Bouton delete Project clicked")
+    setTasks(t => t.filter(task => task.projectId !== selectedId))
+    setProjects(p => p.filter(project => project.id !== selectedId))
+  }
 
   const tasks: Task[] = [
     {
@@ -96,6 +110,21 @@ function HomePage(){
   /**Logic related to the STATEFULL var Tasks */
   const [stateTasks, setTasks] = useState<Task[]>(tasks)
 
+  const [selectedTaskID, setSelectedTaskID] = useState<number | null>(null)
+
+  function handleChangeTaskID(id : number){
+    setSelectedTaskID(id)
+  }
+
+  const selectedTask = useMemo(() => {
+    return stateTasks.find(task => task.id === selectedTaskID)
+  },[stateTasks,selectedTaskID])
+
+  /**const tasksUI : TaskUI[] = tasks.map(t => ({...t, projectColor : getColorTask(t, projects)}))*/
+  const tasksUI : TaskUI[] = useMemo(() =>{
+    return stateTasks.map(t => ({...t, projectColor : getColorTask(t, projects)}))
+  }, [stateTasks,stateProjects])
+
   function handleDeleteTask(id : number){
     /**Delete the selected task */
     console.log("id donné :", id)
@@ -145,6 +174,14 @@ function HomePage(){
     }))
   }
 
+  function getColorTask(task : Task, projects : Project[]) : string{
+    /**Give the color associated to a task if affiliated to a project */
+    if(!task.projectId){return "#FFFFFF"}
+
+    const project = projects.find(p => p.id === task.projectId)
+    return project?.color ?? "#FFFFFF"
+  }
+
 
   return(
     <>
@@ -153,14 +190,18 @@ function HomePage(){
         <div className={style.content}>
           <TaskSection 
             tasks={stateTasks}
+            tasksUI={tasksUI}
+            selectedTask={selectedTask}
             handleDeleteTask={handleDeleteTask}
             handlePriorityTask={handlePriorityTask}
             handleProgressTask={handleProgressTask}
             handleEditTask={handleEditTask}
+            handleChangeTaskID={handleChangeTaskID}
           />
           <ProjectSection 
-            tasks={tasks}
-            projects={projects}
+            tasks={stateTasks}
+            projects={stateProjects}
+            handleDeleteProjects={handleDeleteProject}
           />
         </div>
       </div>

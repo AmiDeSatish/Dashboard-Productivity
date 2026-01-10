@@ -8,24 +8,25 @@ import highPrio from "../../../../assets/appleEmoji/high.png"
 import editEmoji from "../../../../assets/appleEmoji/edit.png"
 import deleteEmoji from "../../../../assets/appleEmoji/delete.png"
 
-import type {Task, Progress, Priority} from "../../../../types/shared.ts"
+import type {Task, Progress, Priority, Project, TaskUI} from "../../../../types/shared.ts"
 import type {Filter} from "../../../../types/tasks.ts"
-import {useContext, useEffect} from "react"
-import { UpString, ddMMyy,NextProgressState, NextPriorityState} from "../../../../utils.ts"
-import { EditTaskContext } from "../TaskSection.tsx"
+import React, {useContext, useEffect} from "react"
+import { UpString, ddMMyy,NextProgressState, NextPriorityState, DarkenColor} from "../../../../utils.ts"
 
 type TaskListProps = {
   tasks : Task[],
+  tasksUI : TaskUI[],
+  selectedTask : Task,
   filter : Filter,
+  openEditModal : (id : number) => void,
   handleEditTask : (id : number, patch : Partial<Task>) => void,
   handleProgressTask : (id : number) => void,
   handlePriorityTask : (id : number) => void,
-  handleDeleteTask : (id : number) => void
+  handleDeleteTask : (id : number) => void,
+  handleChangeTaskID : (id : number) => void
 }
 
-function TaskList({tasks,filter,handleEditTask,handlePriorityTask,handleProgressTask,handleDeleteTask} : TaskListProps){
-  /**Use the context of TaskSection to open  */
-  const ctx = useContext(EditTaskContext)
+function TaskList({tasks,selectedTask,tasksUI,filter,openEditModal,handleEditTask,handlePriorityTask,handleProgressTask,handleDeleteTask,handleChangeTaskID} : TaskListProps){
 
   const progressEmojiMap : Record<Progress,string> = {
     pending : snoozeEmoji,
@@ -38,10 +39,6 @@ function TaskList({tasks,filter,handleEditTask,handlePriorityTask,handleProgress
     medium : mediumPrio,
     high : highPrio,
   }
-
-  useEffect(() => {
-    console.log(tasks)
-  },[tasks])
 
   return(
     <>
@@ -93,9 +90,16 @@ function TaskList({tasks,filter,handleEditTask,handlePriorityTask,handleProgress
             <span>Actions</span>
           </div>
         </div>
-        {tasks.map(task => {
+        {tasksUI.map(task => {
           return(
-            <div key={task.id} className={`${style.taskGrid} ${style.gridRow}`}>
+            <div 
+              key={task.id} 
+              className={`${style.taskGrid} ${style.gridRow}`} 
+              style={{
+                "--task-color" : task.projectColor,
+                "--hover-color" : DarkenColor(task.projectColor)
+              } as React.CSSProperties}
+            >
               <div className={style.caseItem}>
                 <span>{task.id}</span>
               </div>
@@ -119,7 +123,7 @@ function TaskList({tasks,filter,handleEditTask,handlePriorityTask,handleProgress
                 </button>
               </div>
               <div className={`${style.caseItem} ${style.doubleButtonCell}`}>
-                <button onClick={() => ctx.openEditModal(task)} className={style.caseButton}>
+                <button onClick={() => openEditModal(task.id)} className={style.caseButton}>
                   <img src={editEmoji}/>
                 </button>
                 <button onClick={() => handleDeleteTask(task.id)} className={style.caseButton}>
